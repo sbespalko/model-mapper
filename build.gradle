@@ -1,0 +1,67 @@
+apply plugin: 'java'
+apply plugin: 'maven'
+
+group 'ru.sbespalko'
+version '1.0-SNAPSHOT'
+
+sourceCompatibility = 8
+targetCompatibility = 8
+
+jar {
+    manifest {
+        attributes('Implementation-Title': project.name,
+                'Implementation-Version': project.version,
+                'Build-date': new Date())
+    }
+}
+repositories {
+    mavenLocal()
+    mavenCentral()
+/*        maven {
+            credentials {
+                username = nexusUser
+                password = nexusPassword
+            }
+            url = nexusUrl
+        }*/
+}
+
+test {
+    useJUnitPlatform()
+}
+
+ext {
+    springVersion = '5.0.8.RELEASE'
+    junitVersion = '5.3.0-M1'
+    juntPlatformVersion = '1.3.0-M1'
+    mockitoVersion = '2.21.0'
+}
+
+dependencies {
+    implementation group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.11.1'
+    implementation group: 'org.slf4j', name: 'slf4j-nop', version: '1.7.25'
+    implementation "org.apache.commons:commons-lang3:3.8"
+    implementation group: 'com.google.guava', name: 'guava', version: '26.0-jre'
+
+    implementation group: 'org.modelmapper', name: 'modelmapper', version: '2.2.0'
+
+    implementation "org.postgresql:postgresql:42.2.4"
+
+    implementation "org.springframework:spring-core:${springVersion}"
+    implementation "org.springframework:spring-context:${springVersion}"
+    implementation "org.springframework:spring-jms:${springVersion}"
+    implementation "org.springframework:spring-webflux:${springVersion}"
+    implementation "org.apache.activemq:activemq-spring:5.15.5"
+
+    implementation "io.projectreactor.ipc:reactor-netty:0.7.8.RELEASE"
+    implementation "javax.servlet:javax.servlet-api:3.0.1"
+
+    testRuntime "org.junit.jupiter:junit-jupiter-engine:${junitVersion}"
+    testImplementation "org.junit.jupiter:junit-jupiter-api:${junitVersion}"
+    testImplementation "org.junit.jupiter:junit-jupiter-params:${junitVersion}"
+    testImplementation group: 'org.assertj', name: 'assertj-core', version: '3.11.1'
+    testImplementation "org.mockito:mockito-junit-jupiter:${mockitoVersion}"
+    testImplementation "org.mockito:mockito-core:${mockitoVersion}"
+    testImplementation "org.springframework:spring-test:${springVersion}"
+}
+
